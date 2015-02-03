@@ -14,52 +14,42 @@ paths:
   /license:
     post:
       summary: Create a new license
-      description: This creates a new student license in the License Manager System.
       parameters:
         - name: license
           in: body
-          description: serialized JSON license object
+          description: JSON serialized license object
           schema:
             $ref: '#/definitions/License'
           required: true
       responses:
         200:
           description: empty
-        300:
-          description: This license is already created for user (license matching discipline and state.) To update this license's start and end date, update license instead.
-          schema:
-            $ref: '#/definitions/Error'
-        400:
-          description: Unable to create the new license record.
+        default:
+          description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
     put:
       summary: Update existing license
-      description: This updates an existing license object
       parameters:
         - name: license
           in: body
-          description: serialized JSON license object
+          description: JSON serialized license object
           schema:
             $ref: '#/definitions/License'
           required: true
       responses:
         200:
           description: empty
-        300:
-          description: No record was found to update.
+        default:
+          description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-        400:
-          description: Unable to update record.
-          schema:
-            $ref: '#/definitions/Error'
+  /license/{licenseId}:
     get:
-      summary: Get license
-      description: This returns a license object by id.
+      summary: Get a JSON serialized license object
       parameters:
         - name: licenseId
-          in: query
+          in: path
           description: Id of the license to return
           required: true
           type: integer
@@ -76,10 +66,9 @@ paths:
             $ref: '#/definitions/Error'
     delete:
       summary: Delete a license
-      description: This deletes a license object by the license Id passed in.
       parameters:
         - name: licenseId
-          in: query
+          in: path
           description: Id of the license to delete
           required: true
           type: integer
@@ -93,49 +82,56 @@ paths:
   /activity:
     post:
       summary: Add an activity
-      description: This adds an activity, which contains information about the CE Units the activity will count towards the student's license requirements.
       parameters:
         - name: activity
           in: body
-          description: Activity to save
+          description: JSON serialized activity object
           schema:
             $ref: '#/definitions/Activity'
           required: true
       responses:
         200:
           description: empty
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     put:
-      summary: Update an activity
-      description: This updates an existing activity.
+      summary: Update an existing activity
       parameters:
         - name: activity
           in: body
-          description: Activity to save
+          description: JSON serialized activity object
           schema:
             $ref: '#/definitions/Activity'
           required: true
       responses:
           200:
             description: empty
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+  /activity/{activityId}:
     get:
-      summary: Get an activity by activity id
-      description: This returns an activity object based on the activity Id provided.
+      summary: Get an JSON serialized activity object by activity id
       parameters:
         - name: activityId
-          in: query
+          in: path
           description: Activity Id
           type: integer
       responses:
           200:
             description: empty
           default:
-            description: activity not found
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
     delete:
       summary: Delete an activity
-      description: This deletes an existing activity
       parameters:
         - name: activityId
-          in: query
+          in: path
           description: Activity Id
           type: integer
           format: number
@@ -143,11 +139,27 @@ paths:
           200:
             description: empty
           default:
-            description: activity not found
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+  /student/{studentId}/licenses:
+    get:
+      summary: Get all licenses for a given student
+      parameters:
+        - name: studentId
+          in: path
+          description: student Id associated with the licenses
+          type: integer
+      responses:
+        200:
+          description: empty
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /student/{studentId}/activities:
     get:
-      summary: Get all student activities
-      description: This returns all activities associated with the given student Id
+      summary: Get all activities for a given student
       parameters:
         - name: studentId
           in: path
@@ -158,7 +170,9 @@ paths:
           200:
             description: empty
           default:
-            description: activities not found
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
   /student/{studentId}/check_accreditations/:
     get:
       summary: Get all accreditation information
@@ -177,7 +191,9 @@ paths:
           200:
             description: empty
           default:
-            description: no licenses found
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
   /student/{studentId}/check_accreditations/{licenseId}:
     get:
       summary: Get all accreditation information for one license
@@ -203,7 +219,9 @@ paths:
             schema:
               $ref: '#/definitions/AccreditationInformation'
           default:
-            description: information not found
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
 
 definitions:
   License:
