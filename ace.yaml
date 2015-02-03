@@ -142,6 +142,7 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
+    
   /activities/{categoryId}:
     get:
       summary: Get a list of activities filtered by category
@@ -176,6 +177,26 @@ paths:
               type: array
               items:
                 $ref: '#/definitions/Category'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+  /disciplines:
+    get:
+      summary: Get a list of available disciplines
+      responses:
+          200:
+            description: JSON serialized array of disciplines
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Discipline'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+      tags: []
+    
   /student/{studentId}/licenses:
     get:
       summary: Get all licenses for a given student
@@ -344,6 +365,16 @@ definitions:
         type: string
       description:
         type: string
+  Discipline:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      acronym:
+        type: string
+      requirements:
+        type: integer
   Activity:
     properties:
       id:
