@@ -22,7 +22,7 @@ paths:
             $ref: '#/definitions/ActivityTrack'
           required: true
       responses:
-        200:
+        201:
           description: empty
         default:
           description: Unexpected error
@@ -139,7 +139,7 @@ paths:
             $ref: '#/definitions/License'
           required: true
       responses:
-        200:
+        201:
           description: empty
         default:
           description: Unexpected error
@@ -195,21 +195,25 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /student/{studentId}/licenses:
-    get:
-      summary: Get all licenses for a given student
+  /status:
+    post:
+      summary: Retrieve a an array of status objects from an array of student ids
       parameters:
-        - name: studentId
-          in: path
-          description: student Id associated with the licenses
-          type: integer
-      responses:
-        200:
-          description: A JSON serialized license object array
+        - name: studentIds
+          in: body
+          description: JSON serialized array of student ids
           schema:
             type: array
             items:
-              $ref: '#/definitions/License'
+              type: integer
+          required: true
+      responses:
+        200:
+          description: A JSON serialized array of status objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AccreditationInformation'
         default:
           description: Unexpected error
           schema:
@@ -230,6 +234,25 @@ paths:
             type: array
             items:
               $ref: '#/definitions/ActivityTrack'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /student/{studentId}/licenses:
+    get:
+      summary: Get all licenses for a given student
+      parameters:
+        - name: studentId
+          in: path
+          description: student Id associated with the licenses
+          type: integer
+      responses:
+        200:
+          description: A JSON serialized license object array
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/License'
         default:
           description: Unexpected error
           schema:
