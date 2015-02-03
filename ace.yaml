@@ -24,10 +24,9 @@ paths:
         - name: license
           in: body
           description: serialized JSON license object
+          schema:
+            $ref: '#/definitions/License'
           required: true
-          type: license
-          format: JSON
-          
       responses:
         200:
           description: empty
@@ -194,3 +193,17 @@ paths:
             description: empty
           default:
             description: no information found
+
+definitions:
+  License:
+    properties:
+      student_id:
+        type: int
+      license:
+        type: string
+      state_id:
+        type: int
+      discipline_id:
+        type: int
+      expiration:
+        type: datetime
