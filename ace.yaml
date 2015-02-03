@@ -195,6 +195,27 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+  /license/{licenseId}/activities:
+    get:
+      summary: Get all activities associated with license
+      parameters:
+        - name: licenseId
+          in: path
+          description: license id
+          required: true
+          type: integer
+          format: number
+      responses:
+        200:
+          description: A JSON serialized array of ActivityTrack objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ActivityTrack'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /status:
     post:
       summary: Retrieve a an array of status objects from an array of student ids
