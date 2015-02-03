@@ -255,6 +255,40 @@ definitions:
     properties:
       id:
         type: integer
+      title:
+        type: string
+      description:
+        type: string
+      input_units:
+        type: number
+      earned_contact_hours:
+        type: number
+      date:
+        type: integer
+      provider:
+        type: string
+      user_id:
+        type: integer
+      activity_name:
+        type: string
+      activity_id:
+        type: integer
+      type_name:
+        type: string
+      type_id:
+        type: integer
+      state_name:
+        type: string
+      state_id:
+        type: integer
+      category_name:
+        type: string
+      category_id:
+        type: integer
+      course_id:
+        type: integer
+      event_id:
+        type: integer
   Error:
     properties:
       message: 
