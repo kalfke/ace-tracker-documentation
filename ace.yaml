@@ -86,7 +86,7 @@ paths:
           in: body
           description: JSON serialized activity object
           schema:
-            $ref: '#/definitions/Activity'
+            $ref: '#/definitions/ActivityTrack'
           required: true
       responses:
         200:
@@ -102,7 +102,7 @@ paths:
           in: body
           description: JSON serialized activity object
           schema:
-            $ref: '#/definitions/Activity'
+            $ref: '#/definitions/ActivityTrack'
           required: true
       responses:
           200:
@@ -135,7 +135,6 @@ paths:
           in: path
           description: Activity Id
           type: integer
-          format: number
       responses:
           200:
             description: empty
@@ -143,6 +142,40 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
+  /activities/{categoryId}:
+    get:
+      summary: Get a list of activities filtered by category
+      parameters:
+        - name: categoryId
+          in: path
+          description: Category Id
+          type: integer
+      responses:
+          200:
+            description: JSON serialized array of activities
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Activity'
+          default:
+            description: Unexpected error
+            schema:
+              $ref: '#/definitions/Error'
+  /categories/{stateId}:
+    get:
+      summary: Get a list of activity categories filtered by state
+      parameters:
+        - name: stateId
+          in: path
+          description: State Id
+          type: integer
+      responses:
+          200:
+            description: JSON serialized array of categories
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Category'
   /student/{studentId}/licenses:
     get:
       summary: Get all licenses for a given student
@@ -177,7 +210,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/Activity'
+              $ref: '#/definitions/ActivityTrack'
         default:
           description: Unexpected error
           schema:
@@ -251,7 +284,7 @@ definitions:
         type: integer
       expiration:
         type: integer
-  Activity:
+  ActivityTrack:
     properties:
       id:
         type: integer
@@ -303,3 +336,19 @@ definitions:
         type: integer
       ceu_needed_by_type:
         type: integer
+  Category:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+  Activity:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
