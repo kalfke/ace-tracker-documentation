@@ -11,73 +11,6 @@ basePath: /v1
 produces:
   - application/json
 paths:
-  /license:
-    post:
-      summary: Create a new license
-      parameters:
-        - name: license
-          in: body
-          description: JSON serialized license object
-          schema:
-            $ref: '#/definitions/License'
-          required: true
-      responses:
-        200:
-          description: empty
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-    put:
-      summary: Update existing license
-      parameters:
-        - name: license
-          in: body
-          description: JSON serialized license object
-          schema:
-            $ref: '#/definitions/License'
-          required: true
-      responses:
-        200:
-          description: empty
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-  /license/{licenseId}:
-    get:
-      summary: Get a license
-      parameters:
-        - name: licenseId
-          in: path
-          description: Id of the license to return
-          required: true
-          type: integer
-          format: number
-      responses:
-        200:
-          description: A JSON serialized License object
-          schema:
-            $ref: '#/definitions/License'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      summary: Delete a license
-      parameters:
-        - name: licenseId
-          in: path
-          description: Id of the license to delete
-          required: true
-          type: integer
-      responses:
-        200:
-          description: empty
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
   /activity:
     post:
       summary: Add an activity
@@ -195,8 +128,73 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
-      tags: []
-    
+  /license:
+    post:
+      summary: Create a new license
+      parameters:
+        - name: license
+          in: body
+          description: JSON serialized license object
+          schema:
+            $ref: '#/definitions/License'
+          required: true
+      responses:
+        200:
+          description: empty
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update existing license
+      parameters:
+        - name: license
+          in: body
+          description: JSON serialized license object
+          schema:
+            $ref: '#/definitions/License'
+          required: true
+      responses:
+        200:
+          description: empty
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /license/{licenseId}:
+    get:
+      summary: Get a license
+      parameters:
+        - name: licenseId
+          in: path
+          description: Id of the license to return
+          required: true
+          type: integer
+          format: number
+      responses:
+        200:
+          description: A JSON serialized License object
+          schema:
+            $ref: '#/definitions/License'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a license
+      parameters:
+        - name: licenseId
+          in: path
+          description: Id of the license to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: empty
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /student/{studentId}/licenses:
     get:
       summary: Get all licenses for a given student
