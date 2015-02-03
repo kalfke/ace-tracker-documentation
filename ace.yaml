@@ -46,7 +46,7 @@ paths:
             $ref: '#/definitions/Error'
   /license/{licenseId}:
     get:
-      summary: Get a JSON serialized license object
+      summary: Get a license
       parameters:
         - name: licenseId
           in: path
@@ -56,10 +56,9 @@ paths:
           format: number
       responses:
         200:
-          description: A serialized License object
+          description: A JSON serialized License object
           schema:
-            items:
-              $ref: '#/definitions/License'
+            $ref: '#/definitions/License'
         default:
           description: Unexpected error
           schema:
@@ -74,7 +73,7 @@ paths:
           type: integer
       responses:
         200:
-          description: Successfully deleted
+          description: empty
         default:
           description: Unexpected error
           schema:
@@ -122,7 +121,9 @@ paths:
           type: integer
       responses:
           200:
-            description: empty
+            description: JSON serialized activity object
+            schema:
+              $ref: '#/definitions/License'
           default:
             description: Unexpected error
             schema:
@@ -152,7 +153,11 @@ paths:
           type: integer
       responses:
         200:
-          description: empty
+          description: A JSON serialized license object array
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/License'
         default:
           description: Unexpected error
           schema:
@@ -167,12 +172,16 @@ paths:
           type: integer
           format: number
       responses:
-          200:
-            description: empty
-          default:
-            description: Unexpected error
-            schema:
-              $ref: '#/definitions/Error'
+        200:
+          description: A JSON serialized activity object array
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Activity'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /student/{studentId}/check_accreditations/:
     get:
       summary: Get all accreditation information
@@ -189,7 +198,11 @@ paths:
           format: number
       responses:
           200:
-            description: empty
+            description: A JSON serialized accreditation information object array
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/AccreditationInformation'
           default:
             description: Unexpected error
             schema:
