@@ -1,16 +1,12 @@
-# this is an example of the Uber API
-# as a demonstration of an API spec in YAML
 swagger: '2.0'
 info:
   title: Ace Tracker API
   description: Track CEs and licenses with ACE
   version: "1.0.0"
-# the domain of the service
 host: ace.medbridge.com
 # array of all schemes that your API supports
 schemes:
   - https
-# will be prefixed to all paths
 basePath: /v1
 produces:
   - application/json
@@ -18,8 +14,7 @@ paths:
   /license:
     post:
       summary: Create a new license
-      description: |
-        This creates a new student license in the License Manager System.
+      description: This creates a new student license in the License Manager System.
       parameters:
         - name: license
           in: body
@@ -30,24 +25,30 @@ paths:
       responses:
         200:
           description: empty
+        300:
+          description: This license is already created for user (license matching discipline and state.) To update this license's start and end date, update license instead.
+        400:
+          description: Unable to create the new license record.
     put:
       summary: Update existing license
-      description: |
-        This updates an existing license object
+      description: This updates an existing license object
       parameters:
         - name: license
           in: body
           description: serialized JSON license object
+          schema:
+            $ref: '#/definitions/License'
           required: true
-          type: license
-          format: JSON
       responses:
         200:
-          description empty
+          description: empty
+        300:
+          description: No record was found to update.
+        400:
+          description: Unable to update record.
     get:
       summary: Get license
-      description: |
-        This returns a license object by id.
+      description: This returns a license object by id.
       parameters:
         - name: licenseId
           in: query
@@ -59,61 +60,57 @@ paths:
         200:
           description: A serialized License object
           schema:
-            type: JSON
             items:
-              $ref: '#/definitions/Product'
+              $ref: '#/definitions/License'
         default:
           description: Unexpected error
     delete:
       summary: Delete a license
-      description: |
-        This deletes a license object by the license Id passed in.
+      description: This deletes a license object by the license Id passed in.
       parameters:
         - name: licenseId
           in: query
           description: Id of the license to delete
           required: true
           type: integer
-          format: number
+      responses:
+        200:
+          description: Successfully deleted
   /activity:
     post:
       summary: Add an activity
-      description: |
-        This adds an activity, which contains information about the CE Units the         activity will count towards the student's license requirements.
+      description: This adds an activity, which contains information about the CE Units the activity will count towards the student's license requirements.
       parameters:
         - name: activity
           in: body
           description: Activity to save
+          schema:
+            $ref: '#/definitions/Activity'
           required: true
-          type: Activity
-          format: JSON
       responses:
         200:
           description: empty
     put:
       summary: Update an activity
-      description: |
-        This updates an existing activity.
+      description: This updates an existing activity.
       parameters:
         - name: activity
           in: body
           description: Activity to save
+          schema:
+            $ref: '#/definitions/Activity'
           required: true
-          type: Activity
-          format: JSON
       responses:
           200:
             description: empty
     get:
       summary: Get an activity by activity id
-      description: |
-        This returns an activity object based on the activity Id provided.
+      description: This returns an activity object based on the activity Id provided.
       parameters:
         - name: activityId
-          in: url
+          in: query
           description: Activity Id
           type: integer
-          format: number
       responses:
           200:
             description: empty
@@ -121,11 +118,10 @@ paths:
             description: activity not found
     delete:
       summary: Delete an activity
-      description: |
-        This deletes an existing activity
+      description: This deletes an existing activity
       parameters:
         - name: activityId
-          in: url
+          in: query
           description: Activity Id
           type: integer
           format: number
@@ -137,11 +133,10 @@ paths:
   /student/{studentId}/activities:
     get:
       summary: Get all student activities
-      description: |
-        This returns all activities associated with the given student Id
+      description: This returns all activities associated with the given student Id
       parameters:
         - name: studentId
-          in: url
+          in: path
           description: student Id associated with the activities
           type: integer
           format: number
@@ -160,7 +155,7 @@ paths:
         Types remaining for the student to maintain the license.
       parameters:
         - name: studentId
-          in: url
+          in: path
           description: student Id to retrieve associated license and accreditation records.
           type: integer
           format: number
@@ -179,12 +174,12 @@ paths:
         to maintain the license.
       parameters:
         - name: studentId
-          in: url
-          description: student Id to retrieve associated license and     accreditation records
+          in: path
+          description: student Id to retrieve associated license and accreditation records
           type: integer
           format: number
         - name: licenseId
-          in: url
+          in: path
           description: the license Id to retrieve information for
           type: integer
           format: number
@@ -192,18 +187,22 @@ paths:
           200:
             description: empty
           default:
-            description: no information found
+            description: information not found
 
 definitions:
   License:
     properties:
       student_id:
-        type: int
+        type: integer
       license:
         type: string
       state_id:
-        type: int
+        type: integer
       discipline_id:
-        type: int
+        type: integer
       expiration:
-        type: datetime
+        type: string
+  Activity:
+    properties:
+      id:
+        type: integer
