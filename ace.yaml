@@ -215,7 +215,7 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /student/{studentId}/check_accreditations/:
+  /student/{studentId}/status/:
     get:
       summary: Get all accreditation information
       description: |
@@ -240,7 +240,7 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
-  /student/{studentId}/check_accreditations/{licenseId}:
+  /student/{studentId}/status/{licenseId}:
     get:
       summary: Get all accreditation information for one license
       description: |
