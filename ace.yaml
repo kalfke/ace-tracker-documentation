@@ -27,6 +27,7 @@ paths:
           required: true
           type: license
           format: JSON
+          
       responses:
         200:
           description: empty
@@ -44,7 +45,6 @@ paths:
       responses:
         200:
           description empty
-  /license/{licenseId}:
     get:
       summary: Get license
       description: |
@@ -54,8 +54,8 @@ paths:
           in: query
           description: Id of the license to return
           required: true
-          type: number
-          format: integer
+          type: integer
+          format: number
       responses:
         200:
           description: A serialized License object
@@ -65,6 +65,17 @@ paths:
               $ref: '#/definitions/Product'
         default:
           description: Unexpected error
+    delete:
+      summary: Delete a license
+      description: |
+        This deletes a license object by the license Id passed in.
+      parameters:
+        - name: licenseId
+          in: query
+          description: Id of the license to delete
+          required: true
+          type: integer
+          format: number
   /activity:
     post:
       summary: Add an activity
@@ -124,3 +135,62 @@ paths:
             description: empty
           default:
             description: activity not found
+  /student/{studentId}/activities:
+    get:
+      summary: Get all student activities
+      description: |
+        This returns all activities associated with the given student Id
+      parameters:
+        - name: studentId
+          in: url
+          description: student Id associated with the activities
+          type: integer
+          format: number
+      responses:
+          200:
+            description: empty
+          default:
+            description: activities not found
+  /student/{studentId}/check_accreditations/:
+    get:
+      summary: Get all accreditation information
+      description: |
+        This returns a summary of all accreditation information associated 
+        with a student. For each license associated with a student, this 
+        service will return the CEUs remaining, CEUs completed, and CEU 
+        Types remaining for the student to maintain the license.
+      parameters:
+        - name: studentId
+          in: url
+          description: student Id to retrieve associated license and accreditation records.
+          type: integer
+          format: number
+      responses:
+          200:
+            description: empty
+          default:
+            description: no licenses found
+  /student/{studentId}/check_accreditations/{licenseId}:
+    get:
+      summary: Get all accreditation information for one license
+      description: |
+        This returns only one summary of accreditation information for a 
+        given license for a given student. This information includes CEUs 
+        remaining, CEUs completed, and CEU Types remaining for the student 
+        to maintain the license.
+      parameters:
+        - name: studentId
+          in: url
+          description: student Id to retrieve associated license and     accreditation records
+          type: integer
+          format: number
+        - name: licenseId
+          in: url
+          description: the license Id to retrieve information for
+          type: integer
+          format: number
+      responses:
+          200:
+            description: empty
+          default:
+            description: no information found
