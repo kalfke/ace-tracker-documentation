@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: Ace Tracker API
+  title: Ace Tracker API (CE Succeed Reboot)
   description: Track CEs and licenses with ACE
   version: "1.0.0"
 host: ace.medbridge.com
@@ -297,9 +297,9 @@ definitions:
     properties:
       licence:
         $ref: '#/definitions/License'
-      CEUsAchieved:
+      ceu_applied:
         type: integer
-      CEUsToGo:
+      ceu_needed:
         type: integer
-      CEUsToGoByType:
+      ceu_needed_by_type:
         type: integer
