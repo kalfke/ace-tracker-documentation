@@ -27,8 +27,12 @@ paths:
           description: empty
         300:
           description: This license is already created for user (license matching discipline and state.) To update this license's start and end date, update license instead.
+          schema:
+            $ref: '#/definitions/Error'
         400:
           description: Unable to create the new license record.
+          schema:
+            $ref: '#/definitions/Error'
     put:
       summary: Update existing license
       description: This updates an existing license object
@@ -44,8 +48,12 @@ paths:
           description: empty
         300:
           description: No record was found to update.
+          schema:
+            $ref: '#/definitions/Error'
         400:
           description: Unable to update record.
+          schema:
+            $ref: '#/definitions/Error'
     get:
       summary: Get license
       description: This returns a license object by id.
@@ -64,6 +72,8 @@ paths:
               $ref: '#/definitions/License'
         default:
           description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     delete:
       summary: Delete a license
       description: This deletes a license object by the license Id passed in.
@@ -76,6 +86,10 @@ paths:
       responses:
         200:
           description: Successfully deleted
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
   /activity:
     post:
       summary: Add an activity
@@ -186,12 +200,16 @@ paths:
       responses:
           200:
             description: empty
+            schema:
+              $ref: '#/definitions/AccreditationInformation'
           default:
             description: information not found
 
 definitions:
   License:
     properties:
+      id:
+        type: integer
       student_id:
         type: integer
       license:
@@ -201,8 +219,22 @@ definitions:
       discipline_id:
         type: integer
       expiration:
-        type: string
+        type: integer
   Activity:
     properties:
       id:
+        type: integer
+  Error:
+    properties:
+      message: 
+        type: string
+  AccreditationInformation:
+    properties:
+      licence:
+        $ref: '#/definitions/License'
+      CEUsAchieved:
+        type: integer
+      CEUsToGo:
+        type: integer
+      CEUsToGoByType:
         type: integer
