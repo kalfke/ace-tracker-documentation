@@ -19,8 +19,15 @@ paths:
           in: body
           description: JSON serialized activity object
           schema:
-            $ref: '#/definitions/ActivityTrack'
+            $ref: '#/definitions/Activity_Track'
           required: true
+        - name: activity_track_licenses
+          in: body
+          description: JSON serialized array of activity_track_license objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Activity_Track_License'
       responses:
         201:
           description: empty
@@ -35,7 +42,7 @@ paths:
           in: body
           description: JSON serialized activity object
           schema:
-            $ref: '#/definitions/ActivityTrack'
+            $ref: '#/definitions/Activity_Track'
           required: true
       responses:
           200:
@@ -207,11 +214,11 @@ paths:
           format: number
       responses:
         200:
-          description: A JSON serialized array of ActivityTrack objects
+          description: A JSON serialized array of Activity_Track objects
           schema:
             type: array
             items:
-              $ref: '#/definitions/ActivityTrack'
+              $ref: '#/definitions/Activity_Track'
         default:
           description: Unexpected error
           schema:
@@ -254,7 +261,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/ActivityTrack'
+              $ref: '#/definitions/Activity_Track'
         default:
           description: Unexpected error
           schema:
@@ -347,7 +354,7 @@ definitions:
         type: integer
       expiration:
         type: integer
-  ActivityTrack:
+  Activity_Track:
     properties:
       id:
         type: integer
@@ -363,8 +370,6 @@ definitions:
         type: integer
       provider:
         type: string
-      user_id:
-        type: integer
       activity_name:
         type: string
       activity_id:
@@ -393,6 +398,10 @@ definitions:
     properties:
       licence:
         $ref: '#/definitions/License'
+      activities:
+        type: array
+        items:
+          $ref: '#/definitions/Activity_Track'
       ceu_applied:
         type: integer
       ceu_needed:
@@ -425,3 +434,11 @@ definitions:
         type: string
       description:
         type: string
+  Activity_Track_License:
+    properties:
+      id:
+        type: integer
+      activity_track_id:
+        type: integer
+      license_id:
+        type: integer
