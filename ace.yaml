@@ -28,6 +28,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Activity_Track_License'
+          required: true
       responses:
         201:
           description: empty
