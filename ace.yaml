@@ -103,14 +103,18 @@ paths:
             description: Unexpected error
             schema:
               $ref: '#/definitions/Error'
-  /categories/{stateId}:
-    get:
+  /categories:
+    post:
       summary: Get a list of activity categories filtered by state
       parameters:
-        - name: stateId
-          in: path
-          description: State Id
-          type: integer
+        - name: stateIds
+          in: body
+          description: JSON serialized array of state ids
+          schema:
+            type: array
+            items:
+              type: integer
+          required: true
       responses:
           200:
             description: JSON serialized array of categories
